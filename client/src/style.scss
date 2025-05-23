@@ -3,6 +3,13 @@ $lightGreen: #b9e7e7;
 .app {
   display: flex;
   justify-content: center;
+  .error_Message {
+    color: rgb(203, 38, 38);
+    font-size: 12px;
+  }
+  .form-input {
+    outline: none;
+  }
   .container {
     width: 1024px;
 
