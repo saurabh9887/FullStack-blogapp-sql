@@ -1,5 +1,6 @@
 import { db } from "../db.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export const register = (req, res) => {
   const q = "SELECT * FROM users WHERE email=? or username=?";
@@ -21,5 +22,32 @@ export const register = (req, res) => {
     });
   });
 };
-export const login = (req, res) => {};
+export const login = (req, res) => {
+  const q = "SELECT * FROM users WHERE username=?";
+  db.query(q, [req.body.username], (err, data) => {
+    if (err) return res.status(500).json(err);
+    if (data.length === 0) {
+      return res.status(401).json("User does not exist");
+    }
+
+    const isPasswordCorrect = bcrypt.compareSync(
+      req.body.password,
+      data[0].password
+    );
+
+    if (!isPasswordCorrect)
+      return res.status(400).json("Incorrect username or password");
+
+    const token = jwt.sign({ id: data[0].id }, "jwtKey");
+
+    const { password, ...other } = data[0];
+
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .json(other);
+  });
+};
 export const logout = (req, res) => {};

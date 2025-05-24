@@ -6,3 +6,9 @@ export const RegisterUserAPI = async (params) => {
   const res = await axios.post(url, params);
   return res;
 };
+
+export const LoginUserAPI = async (params) => {
+  const url = `${Base_Url}/auth/login`;
+  const res = await axios.post(url, params);
+  return res;
+};

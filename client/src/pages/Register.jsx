@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { RegisterUserAPI } from "../API_Services/RegisterAPI";
+import { RegisterUserAPI } from "../API_Services/AuthAPI";
 import { requiredMessage } from "../support";
 
 const Register = () => {
@@ -33,6 +33,12 @@ const Register = () => {
     } else if (registerUser.email && !isValidEmail(registerUser.email)) {
       setError(true);
       isValid = true;
+    } else if (
+      registerUser.password &&
+      !isValidPassword(registerUser.password)
+    ) {
+      setError(true);
+      isValid = true;
     }
 
     const params = {
@@ -47,18 +53,10 @@ const Register = () => {
   };
 
   const RegisterUserData = async (params) => {
-    debugger;
     try {
       await RegisterUserAPI(params);
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          username: params.username,
-          email: params.email,
-        })
-      );
 
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       setErrorMessage(error.response.data);
       console.log(error);
