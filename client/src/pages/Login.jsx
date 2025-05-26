@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { requiredMessage } from "../support";
 import { LoginUserAPI } from "../API_Services/AuthAPI";
+import { AuthContext } from "../context/authContext";
+import { useContext } from "react";
 
 const Login = () => {
   const [loginUser, setLoginUser] = useState({
@@ -11,6 +13,8 @@ const Login = () => {
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
+  console.log("currentUser", currentUser);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -42,8 +46,9 @@ const Login = () => {
 
   const LoginUserData = async (params) => {
     try {
-      await LoginUserAPI(params);
-
+      const res = await LoginUserAPI(params);
+      localStorage.setItem("user", JSON.stringify(res.data));
+      setCurrentUser(res.data);
       navigate("/");
     } catch (error) {
       setErrorMessage(error.response.data);

@@ -12,3 +12,9 @@ export const LoginUserAPI = async (params) => {
   const res = await axios.post(url, params);
   return res;
 };
+
+export const LogoutAPI = async (params) => {
+  const url = `${Base_Url}/auth/logout`;
+  const res = await axios.post(url, params);
+  return res;
+};
