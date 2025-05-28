@@ -1,15 +1,32 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import Menu from "../components/Menu";
+import { getSingleBlogPostAPI } from "../API_Services/postsAPI";
 
 const SingleBlogPost = () => {
+  const [post, setPost] = useState([]);
+  const location = useLocation();
+
+  const postID = location.pathname.split("/")[2];
+
+  useEffect(() => {
+    GetSingleBlogPost(postID);
+  }, [postID]);
+
+  const GetSingleBlogPost = async (postID) => {
+    try {
+      const res = await getSingleBlogPostAPI(postID);
+      if (res.status === 200) {
+        setPost(res.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="singlePage">
       <div className="content">
-        <img
-          src="https://images.pexels.com/photos/7008010/pexels-photo-7008010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-          alt=""
-        />
+        <img src={post.postImg} alt="" />
 
         <div className="user">
           <img
