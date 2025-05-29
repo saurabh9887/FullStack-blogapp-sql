@@ -14,3 +14,10 @@ export const getSingleBlogPostAPI = async (postID) => {
 
   return res;
 };
+
+export const deletePostSingleBlogPostAPI = async (postID) => {
+  const url = `${Base_Url}/posts/${postID}`;
+  const res = await axios.delete(url);
+
+  return res;
+};
