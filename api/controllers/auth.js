@@ -47,7 +47,7 @@ export const login = (req, res) => {
         httpOnly: true,
       })
       .status(200)
-      .json({ ...other, token });
+      .json(other);
   });
 };
 export const logout = (req, res) => {

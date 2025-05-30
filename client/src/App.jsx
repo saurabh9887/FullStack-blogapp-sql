@@ -10,7 +10,7 @@ import "./style.scss";
 
 const App = () => {
   return (
-    <BrowserRouter>
+    
       <div className="app">
         <div className="container">
           <Routes>
@@ -24,7 +24,6 @@ const App = () => {
           </Routes>
         </div>
       </div>
-    </BrowserRouter>
   );
 };
 

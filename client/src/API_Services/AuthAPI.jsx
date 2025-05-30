@@ -9,7 +9,7 @@ export const RegisterUserAPI = async (params) => {
 
 export const LoginUserAPI = async (params) => {
   const url = `${Base_Url}/auth/login`;
-  const res = await axios.post(url, params);
+  const res = await axios.post(url, params,{withCredentials: true });
   return res;
 };
 

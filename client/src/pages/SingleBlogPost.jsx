@@ -10,7 +10,7 @@ import { useContext } from "react";
 import { AuthContext } from "../context/authContext";
 
 const SingleBlogPost = () => {
-  const [post, setPost] = useState([]);
+  const [post, setPost] = useState({});
   const location = useLocation();
   const { currentUser } = useContext(AuthContext);
 
@@ -20,6 +20,8 @@ const SingleBlogPost = () => {
   useEffect(() => {
     GetSingleBlogPost(postID);
   }, [postID]);
+
+  // console.log(post)
 
   const GetSingleBlogPost = async (postID) => {
     try {
@@ -40,6 +42,7 @@ const SingleBlogPost = () => {
       console.log(error);
     }
   };
+
   return (
     <div className="singlePage">
       <div className="content">
@@ -67,7 +70,7 @@ const SingleBlogPost = () => {
         <h1>{post.postTitle}</h1>
         {post.postDesc}
       </div>
-      <Menu />
+      {post?.cat && <Menu cat={post.cat} />}
     </div>
   );
 };
